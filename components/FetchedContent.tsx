@@ -1,10 +1,61 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import yaml from "js-yaml";
+
+interface Rule {
+  domain?: string;
+  domains?: string[];
+  headers?: Record<string, string>;
+  paths?: string[];
+  injections?: Array<{
+    position: string;
+    append?: string;
+    prepend?: string;
+  }>;
+}
 
 export default function FetchedContent({ url }: { url: string }) {
   const [content, setContent] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+  const [ruleset, setRuleset] = useState<Rule[]>([]);
+
+  useEffect(() => {
+    // Load ruleset
+    fetch("/ruleset.yaml")
+      .then((response) => response.text())
+      .then((text) => {
+        const rules = yaml.load(text) as Rule[];
+        setRuleset(rules);
+      })
+      .catch((err) => {
+        console.error("Error loading ruleset:", err);
+      });
+  }, []);
+
+  const getHeadersForUrl = (url: string): Record<string, string> => {
+    try {
+      const urlObj = new URL(url);
+      const hostname = urlObj.hostname;
+      const pathname = urlObj.pathname;
+
+      for (const rule of ruleset) {
+        // Check if domain matches
+        const domains = rule.domains || (rule.domain ? [rule.domain] : []);
+        if (!domains.includes(hostname)) continue;
+
+        // Check if path matches (if paths are specified)
+        if (rule.paths && !rule.paths.some((path) => pathname.startsWith(path)))
+          continue;
+
+        // Return headers if they exist
+        return rule.headers || {};
+      }
+    } catch (err) {
+      console.error("Error parsing URL:", err);
+    }
+    return {};
+  };
 
   const addBaseTag = (html: string, baseUrl: string) => {
     try {
@@ -27,7 +78,12 @@ export default function FetchedContent({ url }: { url: string }) {
   useEffect(() => {
     const fetchContent = async () => {
       try {
-        const response = await fetch(`https://proxy.corsfix.com/?${url}`);
+        const headers = getHeadersForUrl(url);
+        const response = await fetch(`https://proxy.corsfix.com/?${url}`, {
+          headers: {
+            "x-corsfix-headers": JSON.stringify(headers),
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch content");
         }
@@ -40,8 +96,10 @@ export default function FetchedContent({ url }: { url: string }) {
       }
     };
 
-    fetchContent();
-  }, [url]);
+    if (url && ruleset.length > 0) {
+      fetchContent();
+    }
+  }, [url, ruleset]);
 
   if (error) {
     return <div className="text-red-500">{error}</div>;
