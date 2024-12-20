@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import yaml from "js-yaml";
 
 interface Rule {
@@ -15,10 +16,28 @@ interface Rule {
   }>;
 }
 
-export default function FetchedContent({ url }: { url: string }) {
+export default function FetchedContent({
+  init,
+  onLoadStart,
+  onLoadEnd,
+}: {
+  init: () => void;
+  onLoadStart: () => void;
+  onLoadEnd: () => void;
+}) {
+  const searchParams = useSearchParams();
+  const url = searchParams.get("url");
   const [content, setContent] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [ruleset, setRuleset] = useState<Rule[]>([]);
+
+  useEffect(() => {
+    if (!url) {
+      init();
+      setContent("");
+      return;
+    }
+  }, [url]);
 
   useEffect(() => {
     // Load ruleset
@@ -76,28 +95,28 @@ export default function FetchedContent({ url }: { url: string }) {
   };
 
   useEffect(() => {
-    const fetchContent = async () => {
+    const fetchContent = async (url: string) => {
       try {
+        onLoadStart();
         const headers = getHeadersForUrl(url);
         const response = await fetch(`https://proxy.corsfix.com/?${url}`, {
           headers: {
             "x-corsfix-headers": JSON.stringify(headers),
           },
         });
-        if (!response.ok) {
-          throw new Error("Failed to fetch content");
-        }
         const data = await response.text();
         const contentWithBase = addBaseTag(data, url);
         setContent(contentWithBase);
+        onLoadEnd();
       } catch (err) {
         console.error(err);
         setError("Could not fetch the page. Please try again.");
+        onLoadEnd();
       }
     };
 
     if (url && ruleset.length > 0) {
-      fetchContent();
+      fetchContent(url);
     }
   }, [url, ruleset]);
 
@@ -108,7 +127,7 @@ export default function FetchedContent({ url }: { url: string }) {
   return (
     <iframe
       srcDoc={content}
-      className="w-full min-h-screen border rounded"
+      className="w-full h-full absolute top-0 left-0 border rounded"
       title="Content Preview"
       sandbox=""
       referrerPolicy="no-referrer"
