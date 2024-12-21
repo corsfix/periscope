@@ -6,11 +6,11 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Periscope - Fetch and Read Web Content Instantly",
   description:
-    "Discover a cleaner reading experience with Periscope. Quickly fetch the raw HTML of any webpage and enjoy direct URL-based access—all from one simple interface.",
+    "Periscope is a web content reader that removes popups, ads, and annoyances, providing a clean and distraction-free reading experience.",
   metadataBase: new URL('https://periscope.corsfix.com'),
   openGraph: {
     title: "Periscope - Fetch and Read Web Content Instantly",
-    description: "Discover a cleaner reading experience with Periscope. Quickly fetch the raw HTML of any webpage and enjoy direct URL-based access—all from one simple interface.",
+    description: "Periscope is a web content reader that removes popups, ads, and annoyances, providing a clean and distraction-free reading experience.",
     images: [
       {
         url: '/periscope-2x1.png',
@@ -23,7 +23,7 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Periscope - Fetch and Read Web Content Instantly",
-    description: "Discover a cleaner reading experience with Periscope. Quickly fetch the raw HTML of any webpage and enjoy direct URL-based access—all from one simple interface.",
+    description: "Periscope is a web content reader that removes popups, ads, and annoyances, providing a clean and distraction-free reading experience.",
     images: ['/periscope-2x1.png']
   },
   icons: {

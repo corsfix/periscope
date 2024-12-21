@@ -49,6 +49,20 @@ export default function Home() {
           isContentReady ? "mt-0" : "mt-[30vh]"
         }`}
       >
+        <div
+          className={`text-center transition-all duration-700 ease-in-out overflow-hidden ${
+            isContentReady ? "opacity-0 h-0" : "opacity-100 h-[120px]"
+          }`}
+        >
+          <h1 className="text-4xl font-bold mb-2">
+            Periscope - Fetch and Read Web Content Instantly
+          </h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            Periscope is a web content reader that removes popups, ads, and
+            annoyances, providing a clean and distraction-free reading
+            experience.
+          </p>
+        </div>
         <div className="flex items-center gap-2 mb-2">
           <Link href="/" className="flex items-center gap-1.5">
             <img
@@ -102,13 +116,11 @@ export default function Home() {
         Periscope is powered by{" "}
         <a href="https://corsfix.com" className="hover:text-gray-700 underline">
           Corsfix
-        </a>{" "}
-        <span className="mx-4">•</span>{" "}
+        </a>
+        <span className="mx-2">•</span>
         <a
           href="https://github.com/corsfix/periscope"
           className="hover:text-gray-700 underline"
-          target="_blank"
-          rel="noopener noreferrer"
         >
           Source code
         </a>
