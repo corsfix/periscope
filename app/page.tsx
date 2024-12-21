@@ -46,7 +46,7 @@ export default function Home() {
     <main className="flex h-dvh flex-col items-center p-2">
       <div
         className={`w-full flex-1 max-w-6xl flex flex-col transition-all duration-700 ${
-          isContentReady ? "mt-0" : "mt-[30vh]"
+          isContentReady ? "mt-0" : "mt-[25vh]"
         }`}
       >
         <div
@@ -54,10 +54,8 @@ export default function Home() {
             isContentReady ? "opacity-0 h-0" : "opacity-100 h-[120px]"
           }`}
         >
-          <h1 className="text-4xl font-bold mb-2">
-            Periscope - Fetch and Read Web Content Instantly
-          </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+          <h1 className="text-3xl font-semibold mb-1">Periscope</h1>
+          <p className="text-base text-gray-600 max-w-3xl mx-auto mb-3">
             Periscope is a web content reader that removes popups, ads, and
             annoyances, providing a clean and distraction-free reading
             experience.
