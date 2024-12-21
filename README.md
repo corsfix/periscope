@@ -19,19 +19,16 @@ While Ladder is self-hosted, Periscope provides these same powerful capabilities
 ```mermaid
 graph LR
     A[User Input URL] --> B[Periscope Frontend]
-    B --> C[proxy.corsfix.com]
+    B -->|With Ruleset| C[proxy.corsfix.com]
     C --> D[Target Website]
     D --> C
     C --> B
-    B --> E[Apply Ruleset]
-    E --> F[Clean Content Display]
+    B --> F[Clean Content Display]
 ```
 
 1. User enters a URL in Periscope
-2. Request is proxied through proxy.corsfix.com
-3. Content is fetched with custom headers and modifications
-4. Site-specific ruleset is applied to remove annoyances
-5. Clean content is displayed to the user
+2. Request is sent to proxy with site-specific ruleset
+3. Clean content is displayed to the user
 
 ## Comparison
 
