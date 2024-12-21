@@ -47,19 +47,18 @@ export default function Home() {
           isContentReady ? "mt-0" : "mt-[30vh]"
         }`}
       >
-        <div className="flex items-center gap-4 mb-4">
+        <div className="flex items-center gap-2 mb-2">
           <Link href="/" className="flex items-center gap-1.5">
             <img
               src="/periscope-1x1.png"
               alt="Periscope Logo"
-              className="w-12"
+              className="w-10"
             />
-            <h1 className="text-lg hidden md:block">Periscope</h1>
           </Link>
           <form onSubmit={handleSubmit} className="flex-1 w-full">
-            <div className="flex items-center border-b-2 border-gray-300 py-2">
+            <div className="flex items-center border rounded border-gray-300 p-1">
               <input
-                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 focus:outline-none"
+                className="appearance-none bg-transparent border-none w-full text-gray-700 px-2 focus:outline-none"
                 type="url"
                 name="url"
                 placeholder="Enter URL"
@@ -98,7 +97,7 @@ export default function Home() {
         </div>
       </div>
       <footer className="text-xs text-gray-500 mt-2">
-        Powered by{" "}
+        Periscope is powered by{" "}
         <a href="https://corsfix.com" className="hover:text-gray-700 underline">
           Corsfix
         </a>{" "}
