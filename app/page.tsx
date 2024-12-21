@@ -41,7 +41,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex h-dvh flex-col items-center p-4">
+    <main className="flex h-dvh flex-col items-center p-2">
       <div
         className={`w-full flex-1 max-w-6xl flex flex-col transition-all duration-700 ${
           isContentReady ? "mt-0" : "mt-[30vh]"
@@ -52,14 +52,14 @@ export default function Home() {
             <img
               src="/periscope-1x1.png"
               alt="Periscope Logo"
-              className="w-5"
+              className="w-12"
             />
             <h1 className="text-lg hidden md:block">Periscope</h1>
           </Link>
           <form onSubmit={handleSubmit} className="flex-1 w-full">
             <div className="flex items-center border-b-2 border-gray-300 py-2">
               <input
-                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+                className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 focus:outline-none"
                 type="url"
                 name="url"
                 placeholder="Enter URL"
@@ -97,6 +97,21 @@ export default function Home() {
           </Suspense>
         </div>
       </div>
+      <footer className="text-xs text-gray-500 mt-2">
+        Powered by{" "}
+        <a href="https://corsfix.com" className="hover:text-gray-700 underline">
+          Corsfix
+        </a>{" "}
+        <span className="mx-4">•</span>{" "}
+        <a
+          href="https://github.com/corsfix/periscope"
+          className="hover:text-gray-700 underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Source code
+        </a>
+      </footer>
     </main>
   );
 }
