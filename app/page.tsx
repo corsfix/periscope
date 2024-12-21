@@ -12,7 +12,9 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    const urlParam = new URLSearchParams(window.location.search).get("url");
+    const urlParam = new URLSearchParams(window.location.search)
+      .keys()
+      .next().value;
     if (urlParam) {
       setDisplayUrl(urlParam);
     }
@@ -22,7 +24,7 @@ export default function Home() {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const url = formData.get("url") as string;
-    router.push(`/?url=${encodeURIComponent(url)}`);
+    router.push(`/?${url}`);
   };
 
   const init = () => {

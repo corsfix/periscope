@@ -26,7 +26,7 @@ export default function FetchedContent({
   onLoadEnd: () => void;
 }) {
   const searchParams = useSearchParams();
-  const url = searchParams.get("url");
+  const url = searchParams.keys().next().value;
   const [content, setContent] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [ruleset, setRuleset] = useState<Rule[]>([]);
